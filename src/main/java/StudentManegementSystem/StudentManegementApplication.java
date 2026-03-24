@@ -1,7 +1,7 @@
 package StudentManegementSystem;
 
+import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,28 +12,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StudentManegementApplication {
 
-  private String name = "Uemura Keishi";
-  private String age = "30";
+  private Map<String, Integer> studentMap = new HashMap<>();
 
   public static void main(String[] args) {
     SpringApplication.run(StudentManegementApplication.class, args);
   }
 
-  @GetMapping("/studentInfo")
-  public String getStudentInfo() {
-    return name + " " + age + "歳";
+  @PostMapping("/addStudent") //生徒情報の追加
+  public String addStudent(String name, int age) {
+    studentMap.put(name, age);
+    return "追加しました";
   }
 
-  @PostMapping("/studentInfo")
-  public void setStudentInfo(String name, String age) {
-    this.name = name;
-    this.age = age;
+  @GetMapping("/students")
+  public Map<String,Integer> getStudents(){
+    return studentMap;
   }
 
-  @PostMapping("/studentName")
-  public void updateStudentName(String name) {
-    this.name = name;
+  @PostMapping("/updateStudent") //生徒情報の更新
+  public String updateStudent(String name, int age) {
+    studentMap.put(name, age);
+    return "更新しました";
   }
+
   // GET POST
   // GETは取得する、リクエストの結果を受け取る
   // POSTは情報を与える、渡す
